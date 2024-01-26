@@ -1,0 +1,149 @@
+
+/* Establecer una tipografía moderna y colores oscuros */
+body {
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    background-color: #1c1c1c; /* Color de fondo oscuro */
+    color: #fff; /* Texto en blanco */
+    text-align: center;
+    margin: 0;
+    padding-top: 60px; /* Espacio para el encabezado */
+}
+
+/* Estilos del encabezado al estilo Apple en oscuro */
+.header {
+    background-color: #292929; /* Color de fondo del encabezado */
+    box-shadow: 0 1px 5px rgba(0, 0, 0, 0.2);
+    position: fixed;
+    width: 100%;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+    padding: 10px 0;
+}
+
+.header-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.header-logo img {
+    height: 40px;
+}
+
+.nav {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.nav li {
+    display: inline;
+    margin-left: 20px;
+}
+
+.nav a {
+    color: #ddd; /* Color claro para enlaces */
+    text-decoration: none;
+    font-weight: bold;
+}
+
+/* Estilos para la calculadora en oscuro */
+.calculadora {
+    background-color: #333; /* Fondo oscuro para la calculadora */
+    max-width: 400px;
+    margin: 20px auto;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 1px 5px rgba(0, 0, 0, 0.2);
+}
+
+.calculadora h2 {
+    margin-top: 0;
+    color: #ddd; /* Texto claro para el título */
+}
+
+input[type=text] {
+    width: calc(100% - 20px);
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #444; /* Borde oscuro para inputs */
+    background-color: #292929; /* Fondo oscuro para inputs */
+    border-radius: 5px;
+    color: #fff; /* Texto en blanco para inputs */
+}
+
+input[type=submit] {
+    width: 100%;
+    padding: 10px;
+    background-color: #007aff; /* Mantener el color del botón */
+    border: none;
+    border-radius: 5px;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+input[type=submit]:hover {
+    background-color: #0056b3; /* Oscurecer el botón al pasar el mouse */
+}
+
+
+
+
+
+/* Estilos para las tablas de resultados */
+.tabla-resultados {
+    width: 90%;
+    margin: 20px auto;
+    border-collapse: collapse;
+    border: 1px solid #ddd;
+}
+
+.tabla-resultados th, .tabla-resultados td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+    color: #ddd;
+}
+
+.tabla-resultados th {
+    background-color: #333;
+}
+
+.tabla-resultados tr:nth-child(even) {
+    background-color: #292929;
+}
+
+.tabla-resultados tr:hover {
+    background-color: #333;
+}
+
+/* Estilos para botones */
+button {
+    padding: 10px 15px;
+    margin: 5px;
+    background-color: #007aff;
+    border: none;
+    border-radius: 5px;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+/* Estilos para mensajes de información */
+.info {
+    margin: 10px 0;
+    padding: 10px;
+    background-color: #333;
+    border-left: 3px solid #007aff;
+    color: #ddd;
+}

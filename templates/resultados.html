@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Resultados de la Calculadora de Resortes</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/estilo.css') }}">
+</head>
+<body>
+
+    <div class="header">
+        <div class="header-content">
+            <div class="header-logo">
+                <img src="{{ url_for('static', filename='img/logo.png') }}" alt="Logo">
+            </div>
+            <ul class="nav">
+                <li><a href="/">Inicio</a></li>
+                <!-- Otros elementos de navegación -->
+            </ul>
+        </div>
+    </div>
+
+
+
+    <form action="/filtrar_resultados" method="post">
+        <div>
+            <h3>Modificar selección de resortes:</h3>
+            {% for tipo in tipos_unicos %}
+            <div>
+                <input type="checkbox" name="resortes_disponibles" value="{{ tipo }}" checked>
+                {{ tipo }}
+            </div>
+            {% endfor %}
+        </div>
+            <input type="hidden" name="peso" value="{{ request.form['peso'] }}">
+            <input type="hidden" name="altura" value="{{ request.form['altura'] }}">
+            <input type="submit" value="Aplicar">
+        </div>
+    </form>
+    
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <h2>Combinaciones recomendadas:</h2>
+    <table class="tabla-resultados">
+        <thead>
+            <tr>
+                <th>Combinación</th>
+                <th>Resorte</th>
+                <th>Vueltas</th>
+                <th>Peso del Resorte</th>
+                <!-- Repetir para la segunda parte de cada combinación -->
+            <th>Resorte</th>
+            <th>Vueltas</th>
+            <th>Peso del Resorte</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for combo in combinaciones %}
+            <tr>
+                <td>Combinación {{ loop.index }}</td>
+                {% for resorte in combo %}
+                <td>{{ resorte.tipo }}</td>
+                <td>{{ resorte.vueltas }}</td>
+                <td>{{ resorte.peso_por_resorte }}</td>
+                {% endfor %}
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <h2>Ver más combinaciones de resortes recomendadas:</h2>
+    <div class="opciones-adicionales">
+        {% for num_resortes, info in opciones.items() %}
+        <div>
+            <button onclick="mostrarCombinaciones({{ num_resortes }})">{{ info.texto_boton }}</button>
+            <span>Con {{ num_resortes }} resorte(s): {{ info.cantidad }} Combinaciones encontradas.</span>
+        </div>
+        {% endfor %}
+    </div>
+
+    <h3>Combinaciones Adicionales:</h3>
+    <table id="resultadosAdicionales" class="tabla-resultados"></table>
+
+    <script>
+        function mostrarCombinaciones(numResortes) {
+            var formData = new FormData();
+            formData.append('num_resortes', numResortes);
+            formData.append('peso', '{{ request.form['peso'] }}');
+            formData.append('altura', '{{ request.form['altura'] }}');
+
+            fetch('/get_combinaciones', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                var resultadosDiv = document.getElementById('resultadosAdicionales');
+                resultadosDiv.innerHTML = '';
+                data.forEach(combinacion => {
+                    resultadosDiv.innerHTML += '<tr>' + combinacion + '</tr>';
+                });
+            })
+            .catch(error => console.error('Error:', error));
+        }
+    </script>
+</body>
+</html>
