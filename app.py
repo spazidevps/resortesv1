@@ -254,16 +254,6 @@ def index():
 
 
 
-
-
-
-
-
-
-
-
-
-
 # IMPRIMIR MAS
 
 @app.route('/get_combinaciones', methods=['POST'])
