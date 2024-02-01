@@ -227,29 +227,25 @@ def main():
 @app.route('/', methods=['GET', 'POST'])
 def index():
     if request.method == 'POST':
-        # Obtener los valores del formulario
         peso_objetivo = float(request.form['peso'])
-        altura = float(request.form['altura']) * 100  # Convertir a cm
-
+        altura = float(request.form['altura']) * 100
         vueltas = calcular_vueltas(altura)
-        # Calculamos inicialmente para 1 y 2 resortes
         combinaciones_iniciales = []
         for num_resortes in [1, 2]:
             combinaciones_iniciales.extend(encontrar_combinaciones(peso_objetivo, vueltas, resortes, num_resortes))
-
-        # Limitar las combinaciones iniciales si lo deseas
         combinaciones_iniciales = combinaciones_iniciales[:6]
-
-        # Calcular opciones adicionales
         opciones_adicionales = {
             num_resortes: {
                 'cantidad': len(encontrar_combinaciones(peso_objetivo, vueltas, resortes, num_resortes)),
                 'texto_boton': f"Ver resultados para {num_resortes} resortes"
             } for num_resortes in range(1, 6)
         }
+        tipos_unicos = {resorte['tipo'] for resorte in resortes}
         return render_template('resultados.html', 
                                combinaciones=combinaciones_iniciales, 
-                               opciones=opciones_adicionales)
+                               opciones=opciones_adicionales,
+                               tipos_unicos=tipos_unicos,
+                               tipos_seleccionados=tipos_unicos)  # Asumir todos seleccionados inicialmente
     return render_template('index.html')
 
 
@@ -278,19 +274,17 @@ def filtrar_resultados():
     peso_objetivo = float(request.form['peso'])
     altura = float(request.form['altura']) * 100  # Convertir a cm
     vueltas = calcular_vueltas(altura)
-
-    # Obtener tipos de resortes seleccionados
+ # Obtener tipos de resortes seleccionados
     tipos_seleccionados = request.form.getlist('resortes_disponibles')
-    
     # Filtrar los resortes basándose en los tipos seleccionados
     resortes_filtrados = [resorte for resorte in resortes if resorte['tipo'] in tipos_seleccionados]
 
-    # Calcular combinaciones con los resortes filtrados
+# Calcular combinaciones con los resortes filtrados
     combinaciones_filtradas = []
     for num_resortes in [1, 2]:
         combinaciones_filtradas.extend(encontrar_combinaciones(peso_objetivo, vueltas, resortes_filtrados, num_resortes))
 
-    # Calcular opciones adicionales
+# Calcular opciones adicionales
     opciones_adicionales = {
         num_resortes: {
             'cantidad': len(encontrar_combinaciones(peso_objetivo, vueltas, resortes_filtrados, num_resortes)),
@@ -298,15 +292,15 @@ def filtrar_resultados():
         } for num_resortes in range(1, 6)
     }
 
-    # Crear un conjunto de tipos únicos de resortes
+# Crear un conjunto de tipos únicos de resortes
     tipos_unicos = {resorte['tipo'] for resorte in resortes}
 
-    # Renderizar la plantilla con los resultados filtrados y los tipos únicos
-    return render_template('resultados.html', 
-                           combinaciones=combinaciones_filtradas, 
+ # Renderizar la plantilla con los resultados filtrados y los tipos únicos
+    return render_template('resultados.html',
+                           combinaciones=combinaciones_filtradas,
                            opciones=opciones_adicionales,
-                           tipos_unicos=tipos_unicos)
-
+                           tipos_unicos=tipos_unicos,
+                           tipos_seleccionados=tipos_seleccionados)
 
 
 

@@ -25,16 +25,21 @@
             <h3>Modificar selección de resortes:</h3>
             {% for tipo in tipos_unicos %}
             <div>
-                <input type="checkbox" name="resortes_disponibles" value="{{ tipo }}" checked>
+                <input type="checkbox" name="resortes_disponibles" value="{{ tipo }}"
+                {% if not tipos_seleccionados or tipo in tipos_seleccionados %}checked{% endif %}>
                 {{ tipo }}
             </div>
             {% endfor %}
         </div>
-            <input type="hidden" name="peso" value="{{ request.form['peso'] }}">
-            <input type="hidden" name="altura" value="{{ request.form['altura'] }}">
+        <input type="hidden" name="peso" value="{{ request.form['peso'] }}">
+        <input type="hidden" name="altura" value="{{ request.form['altura'] }}">
+        <div>
             <input type="submit" value="Aplicar">
         </div>
     </form>
+    
+    
+    
     
     
 
