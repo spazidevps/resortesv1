@@ -19,17 +19,18 @@
     </div>
 
 
-
     <form action="/filtrar_resultados" method="post">
         <div>
             <h3>Modificar selección de resortes:</h3>
-            {% for tipo in tipos_unicos %}
-            <div>
-                <input type="checkbox" name="resortes_disponibles" value="{{ tipo }}"
-                {% if not tipos_seleccionados or tipo in tipos_seleccionados %}checked{% endif %}>
-                {{ tipo }}
+            <div style="display: flex; flex-wrap: wrap;">
+                {% for tipo in tipos_unicos %}
+                    <div style="margin-right: 10px;">
+                        <input type="checkbox" name="resortes_disponibles" value="{{ tipo }}"
+                        {% if not tipos_seleccionados or tipo in tipos_seleccionados %}checked{% endif %}>
+                        {{ tipo }}
+                    </div>
+                {% endfor %}
             </div>
-            {% endfor %}
         </div>
         <input type="hidden" name="peso" value="{{ request.form['peso'] }}">
         <input type="hidden" name="altura" value="{{ request.form['altura'] }}">
@@ -37,6 +38,7 @@
             <input type="submit" value="Aplicar">
         </div>
     </form>
+    
     
     
     
