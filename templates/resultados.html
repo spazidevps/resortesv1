@@ -20,24 +20,34 @@
 
 
     <form action="/filtrar_resultados" method="post">
-        <div>
-            <h3>Modificar selección de resortes:</h3>
-            <div style="display: flex; flex-wrap: wrap;">
+        <fieldset class="checkbox-group">
+            <legend class="checkbox-group-legend">Desmarca los resortes que no tengas en stock</legend>
+            <div class="checkbox-container" style="display: flex; flex-wrap: wrap; justify-content: center;">
                 {% for tipo in tipos_unicos %}
-                    <div style="margin-right: 10px;">
-                        <input type="checkbox" name="resortes_disponibles" value="{{ tipo }}"
-                        {% if not tipos_seleccionados or tipo in tipos_seleccionados %}checked{% endif %}>
-                        {{ tipo }}
+                    <div class="checkbox">
+                        <label class="checkbox-wrapper">
+                            <input type="checkbox" class="checkbox-input" name="resortes_disponibles" value="{{ tipo }}"
+                            {% if not tipos_seleccionados or tipo in tipos_seleccionados %}checked{% endif %}>
+                            <span class="checkbox-tile">
+                                <span class="checkbox-icon">
+                                    <img src="https://i.ibb.co/zJWfLy3/resorte-de-acero.png" alt="Icono de automotor" class="small-icon">
+                                </span>
+                                <span class="checkbox-label">{{ tipo }}</span>
+                            </span>
+                        </label>
                     </div>
                 {% endfor %}
             </div>
-        </div>
-        <input type="hidden" name="peso" value="{{ request.form['peso'] }}">
-        <input type="hidden" name="altura" value="{{ request.form['altura'] }}">
-        <div>
-            <input type="submit" value="Aplicar">
-        </div>
+            <input type="hidden" name="peso" value="{{ request.form['peso'] }}">
+            <input type="hidden" name="altura" value="{{ request.form['altura'] }}">
+            <div class="submit-container" style="text-align: center; margin-top: 20px;">
+                <input type="submit" value="Aplicar" class="btn-aplicar">
+            </div>
+        </fieldset>
     </form>
+    
+    
+    
     
     
     
