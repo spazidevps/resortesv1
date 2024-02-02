@@ -13,33 +13,26 @@
             </div>
             <ul class="nav">
                 <li><a href="/">Inicio</a></li>
-                <!-- Otros elementos de navegación -->
             </ul>
         </div>
     </div>
 
-
     <div class="cards-container">
         <div class="card-box">
+            <img src="https://i.ibb.co/HLSW0Mt/negocio.png" alt="Peso" class="icono">
             <p>Peso capturado: {{ peso }} kg</p>
         </div>
         
         <div class="card-box">
+            <img src="https://i.ibb.co/0J5SyL7/altura.png" alt="Altura" class="icono">
             <p>Altura capturada: {{ altura }} m</p>
         </div>
     
-        <!-- Corregido para mostrar el ancho en lugar de la altura duplicada -->
         <div class="card-box">
+            <img src="https://i.ibb.co/2tQQY23/ancho.png" alt="Ancho" class="icono">
             <p>Ancho capturado: {{ ancho }} m</p>
         </div>
     </div>
-    
-    
-    
-    <!-- Aquí continúa el resto de tu código HTML para el formulario y la visualización de combinaciones -->
-    
-
-
 
     <form action="/filtrar_resultados" method="post">
         <fieldset class="checkbox-group">
@@ -60,36 +53,14 @@
                     </div>
                 {% endfor %}
             </div>
-            <input type="hidden" name="peso" value="{{ request.form['peso'] }}">
-            <input type="hidden" name="altura" value="{{ request.form['altura'] }}">
+            <input type="hidden" name="peso" value="{{ peso }}">
+            <input type="hidden" name="altura" value="{{ altura }}">
+            <input type="hidden" name="ancho" value="{{ ancho }}">
             <div class="submit-container" style="text-align: center; margin-top: 20px;">
                 <input type="submit" value="Aplicar" class="btn-aplicar">
             </div>
         </fieldset>
     </form>
-    
-    
-    
-    
-    
-    
-    
-    
-    
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
     <h2>Combinaciones recomendadas:</h2>
     <table class="tabla-resultados">
@@ -99,10 +70,6 @@
                 <th>Resorte</th>
                 <th>Vueltas</th>
                 <th>Peso del Resorte</th>
-                <!-- Repetir para la segunda parte de cada combinación -->
-            <th>Resorte</th>
-            <th>Vueltas</th>
-            <th>Peso del Resorte</th>
             </tr>
         </thead>
         <tbody>
@@ -129,15 +96,13 @@
         {% endfor %}
     </div>
 
-    <h3>Combinaciones Adicionales:</h3>
-    <table id="resultadosAdicionales" class="tabla-resultados"></table>
-
     <script>
         function mostrarCombinaciones(numResortes) {
             var formData = new FormData();
             formData.append('num_resortes', numResortes);
-            formData.append('peso', '{{ request.form['peso'] }}');
-            formData.append('altura', '{{ request.form['altura'] }}');
+            formData.append('peso', '{{ peso }}');
+            formData.append('altura', '{{ altura }}');
+            formData.append('ancho', '{{ ancho }}');
 
             fetch('/get_combinaciones', {
                 method: 'POST',

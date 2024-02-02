@@ -335,24 +335,28 @@ button:hover {
 
 
 
-.cards-container {
-    display: flex;
-    justify-content: center; /* Centra los elementos horizontalmente */
+.card-box {
+    display: inline-flex; /* Alineación más estrecha */
     align-items: center;
-    flex-wrap: nowrap; /* Impide que los elementos se envuelvan */
-    padding: 10px 0; /* Añade algo de espacio arriba y abajo dentro del contenedor */
+    padding: 10px 20px;
+    margin: 0 10px;
+    background-color: #00000000;
+    border-radius: 8px;
+    max-width: 30%;
 }
 
-.card-box {
-    background-color: #272727;
-    border-radius: 8px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    padding: 20px;
-    margin: 0 10px; /* Reduce el margen lateral para asegurar el ajuste */
-    flex: 1; /* Permite que los elementos crezcan igualmente para llenar el espacio */
-    max-width: 30%; /* Limita el ancho máximo de cada tarjeta */
-    text-align: left;
-    color: #fffcfc;
-    font-size: 1rem;
+.icono {
+    flex: none;
+    width: 24px;
+    height: auto;
+    margin-right: 5px;
 }
+
+.card-box p {
+    margin: 0;
+    font-size: 0.9rem;
+}
+
+
+
 
