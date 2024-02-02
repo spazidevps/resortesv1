@@ -228,7 +228,9 @@ def main():
 def index():
     if request.method == 'POST':
         peso_objetivo = float(request.form['peso'])
-        altura = float(request.form['altura']) * 100
+        altura = float(request.form['altura']) * 100  # Convertir altura a centímetros
+        ancho = float(request.form['ancho'])  # Capturar el ancho del formulario
+
         vueltas = calcular_vueltas(altura)
         combinaciones_iniciales = []
         for num_resortes in [1, 2]:
@@ -245,8 +247,13 @@ def index():
                                combinaciones=combinaciones_iniciales, 
                                opciones=opciones_adicionales,
                                tipos_unicos=tipos_unicos,
-                               tipos_seleccionados=tipos_unicos)  # Asumir todos seleccionados inicialmente
-    return render_template('index.html')
+                               tipos_seleccionados=tipos_unicos,  # Asumir todos seleccionados inicialmente
+                               peso=peso_objetivo,
+                               altura=altura / 100,  # Convertir de nuevo a metros para la visualización
+                               ancho=ancho)  # Incluir el ancho capturado para la visualización
+    else:
+        return render_template('index.html')
+
 
 
 

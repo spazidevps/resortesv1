@@ -19,6 +19,28 @@
     </div>
 
 
+    <div class="cards-container">
+        <div class="card-box">
+            <p>Peso capturado: {{ peso }} kg</p>
+        </div>
+        
+        <div class="card-box">
+            <p>Altura capturada: {{ altura }} m</p>
+        </div>
+    
+        <!-- Corregido para mostrar el ancho en lugar de la altura duplicada -->
+        <div class="card-box">
+            <p>Ancho capturado: {{ ancho }} m</p>
+        </div>
+    </div>
+    
+    
+    
+    <!-- Aquí continúa el resto de tu código HTML para el formulario y la visualización de combinaciones -->
+    
+
+
+
     <form action="/filtrar_resultados" method="post">
         <fieldset class="checkbox-group">
             <legend class="checkbox-group-legend">Desmarca los resortes que no tengas en stock</legend>

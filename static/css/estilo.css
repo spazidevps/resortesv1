@@ -332,3 +332,27 @@ button:hover {
 .btn-aplicar:hover {
     background-color: #0056b3; /* Cambia el color cuando se pasa el mouse por encima */
 }
+
+
+
+.cards-container {
+    display: flex;
+    justify-content: center; /* Centra los elementos horizontalmente */
+    align-items: center;
+    flex-wrap: nowrap; /* Impide que los elementos se envuelvan */
+    padding: 10px 0; /* Añade algo de espacio arriba y abajo dentro del contenedor */
+}
+
+.card-box {
+    background-color: #272727;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    margin: 0 10px; /* Reduce el margen lateral para asegurar el ajuste */
+    flex: 1; /* Permite que los elementos crezcan igualmente para llenar el espacio */
+    max-width: 30%; /* Limita el ancho máximo de cada tarjeta */
+    text-align: left;
+    color: #fffcfc;
+    font-size: 1rem;
+}
+
