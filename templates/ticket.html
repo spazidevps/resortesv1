@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/ticket.css') }}">
+    <script src="{{ url_for('static', filename='js/ticket.js') }}"></script>
+    <title>Impresión de Ticket de Resortes</title>
+</head>
+<body>
+    <div class="feedback" id="oldX"></div>
+    <div class="feedback" id="oldY"></div>
+    <div class="table">
+      <div class="table-cell">
+        <div id="ticket">
+          <div class="row perforated first">
+            <img class="logo" src="https://www.puertasautomaticasenquintanaroo.com.mx/images/grupo-spazi.svg" />
+            <div class="right">
+              <div class="label">CALCULADORA DE RESORTES</div>
+            </div>
+          </div>
+          <div class="row perforated destinations">
+            <div class="left">
+              <div class="label">SUCURSAL: PACHUCA</div>
+              <div class="city">MATRIZ</div>
+            </div>
+          </div>
+          <div class="row normRow">
+            <div>
+                <div class="label">DATOS SOLICITADOS PARA RESORTE</div>
+                <div>PESO: {{ peso }}</div>
+                <div>ANCHO: {{ ancho }}</div>
+                <div>ALTO: {{ altura }}</div>
+            </div>
+          </div>
+          <!-- Asumiendo que los resortes se pasan como una lista de diccionarios -->
+          <div class="row normRow">
+            <div class="label">RESORTES ENTREGADOS Y CÁLCULO RECOMENDADO</div>
+            <table class="resortes-entregados">
+                <thead>
+                    <tr class="city">
+                        <th>RESORTE</th>
+                        <th>****</th>
+                        <th>****</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for resorte in resortes %}
+                    <tr>
+                        <td>{{ resorte.tipo }}</td>
+                        <td>{{ resorte.vueltas }}</td>
+                        <td> {{ resorte.peso }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            
+          </div>
+          <div class="row">
+            <div class="sparkler"></div>
+            <img id="qr" src='https://chart.googleapis.com/chart?cht=qr&chl=UA%201136%2098745-34538459&chs=180x180&choe=UTF-8&chld=L|2' alt=''>
+            <div class="smalltext">Verifique sus resortes antes de firmar ya que por cualquier error ajeno no aplicará garantía.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <script>
+        window.onload = function() {
+          window.print();
+        };
+      </script>
+    
+
+
+</body>
+</html>

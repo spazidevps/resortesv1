@@ -3,6 +3,8 @@
 <head>
     <title>Resultados de la Calculadora de Resortes</title>
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/estilo.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+
 </head>
 <body>
 
@@ -33,7 +35,6 @@
             <p>Ancho capturado: {{ ancho }} m</p>
         </div>
     </div>
-
     <form action="/filtrar_resultados" method="post">
         <fieldset class="checkbox-group">
             <legend class="checkbox-group-legend">Desmarca los resortes que no tengas en stock</legend>
@@ -42,7 +43,7 @@
                     <div class="checkbox">
                         <label class="checkbox-wrapper">
                             <input type="checkbox" class="checkbox-input" name="resortes_disponibles" value="{{ tipo }}"
-                            {% if not tipos_seleccionados or tipo in tipos_seleccionados %}checked{% endif %}>
+                            {% if tipo in tipos_seleccionados %} checked {% endif %}>
                             <span class="checkbox-tile">
                                 <span class="checkbox-icon">
                                     <img src="https://i.ibb.co/zJWfLy3/resorte-de-acero.png" alt="Icono de automotor" class="small-icon">
@@ -61,63 +62,71 @@
             </div>
         </fieldset>
     </form>
+    
 
-    <h2>Combinaciones recomendadas:</h2>
-    <table class="tabla-resultados">
-        <thead>
-            <tr>
-                <th>Combinación</th>
-                <th>Resorte</th>
-                <th>Vueltas</th>
-                <th>Peso del Resorte</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for combo in combinaciones %}
-            <tr>
-                <td>Combinación {{ loop.index }}</td>
-                {% for resorte in combo %}
-                <td>{{ resorte.tipo }}</td>
-                <td>{{ resorte.vueltas }}</td>
-                <td>{{ resorte.peso_por_resorte }}</td>
+   <div class="combinations-container">
+        {% for num_resortes, combinaciones in combinaciones_por_numero.items() %}
+            <h3>{{ num_resortes }} Resorte(s):</h3>
+            <div class="cards">
+                {% for combo in combinaciones %}
+                    <div class="card">
+                        <div class="card-content">
+                            <h4 class="card-header">Combinación {{ loop.index }}</h4>
+                            <div class="card-body">
+                                {% for resorte in combo %}
+                                    <p>{{ resorte.tipo }} - Vueltas: {{ resorte.vueltas }} - Peso: {{ resorte.peso_por_resorte }} kg</p>
+                                {% endfor %}
+                            </div>
+                            <!-- Botones de copiar y imprimir -->
+                            <div class="card-actions">
+                                <button class="btn" onclick="copiarInformacion(this)">Copiar</button>
+                                <button class="btn" onclick="imprimirInformacion(this)">Imprimir</button>
+                            </div>
+                        </div>
+                    </div>
                 {% endfor %}
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
-
-    <h2>Ver más combinaciones de resortes recomendadas:</h2>
-    <div class="opciones-adicionales">
-        {% for num_resortes, info in opciones.items() %}
-        <div>
-            <button onclick="mostrarCombinaciones({{ num_resortes }})">{{ info.texto_boton }}</button>
-            <span>Con {{ num_resortes }} resorte(s): {{ info.cantidad }} Combinaciones encontradas.</span>
-        </div>
+            </div>
         {% endfor %}
     </div>
 
+    <!-- JavaScript para manejar copiar e imprimir -->
     <script>
-        function mostrarCombinaciones(numResortes) {
-            var formData = new FormData();
-            formData.append('num_resortes', numResortes);
-            formData.append('peso', '{{ peso }}');
-            formData.append('altura', '{{ altura }}');
-            formData.append('ancho', '{{ ancho }}');
+        function copiarInformacion(buttonElement) {
+            var textoACopiar = "";
+            var cardContent = buttonElement.closest('.card').querySelector('.card-body');
+            cardContent.querySelectorAll('p').forEach(function(p) {
+                var texto = p.textContent.split(' - ')[0]; // Extrae solo el tipo
+                textoACopiar += "1 Resorte de " + texto + "\n"; // Agrega el prefijo y formatea el texto
+            });
+            navigator.clipboard.writeText(textoACopiar.trim()).then(function() {
+                alert("Información copiada al portapapeles");
+            }, function(err) {
+                console.error('Error al copiar: ', err);
+            });
+        }
+        
 
-            fetch('/get_combinaciones', {
-                method: 'POST',
-                body: formData
-            })
-            .then(response => response.json())
-            .then(data => {
-                var resultadosDiv = document.getElementById('resultadosAdicionales');
-                resultadosDiv.innerHTML = '';
-                data.forEach(combinacion => {
-                    resultadosDiv.innerHTML += '<tr>' + combinacion + '</tr>';
-                });
-            })
-            .catch(error => console.error('Error:', error));
+        function imprimirInformacion(buttonElement) {
+            var cardContent = buttonElement.closest('.card').querySelector('.card-body');
+            var resortes = Array.from(cardContent.querySelectorAll('p')).map(p => `resortes=${encodeURIComponent(p.textContent)}`).join('&');
+    
+            // Asegúrate de incluir peso, altura y ancho en la URL
+            var peso = document.querySelector('.card-box img[alt="Peso"] + p').textContent.split(': ')[1].trim();
+            var altura = document.querySelector('.card-box img[alt="Altura"] + p').textContent.split(': ')[1].trim();
+            var ancho = document.querySelector('.card-box img[alt="Ancho"] + p').textContent.split(': ')[1].trim();
+    
+            var url = `/imprimir_ticket?peso=${peso}&altura=${altura}&ancho=${ancho}&${resortes}`;
+            window.open(url, '_blank');
         }
     </script>
+    
+    
+ 
+
+
+
+
+
+    
 </body>
 </html>
